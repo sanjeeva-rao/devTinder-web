@@ -1,11 +1,10 @@
+import NavBar from "./Components/Navbar.jsx"
 
 function App() {
 
   return (
     <>
-      <div className="bg-red-300">
-        Hello world
-      </div>
+      <NavBar/>
     </>
   )
 }
