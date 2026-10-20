@@ -8,18 +8,19 @@ import axios from "axios";
 const Login = () => {
     const [email,setEmail] = useState("Msd123456@gmail.com");
     const [password, setPassword] = useState("Msd123456@");
+    const [error,setError] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async() => {
         try{
-            console.log(email,password);
             const response = await axios.post(baseUrl+"/login", {email, password}, {withCredentials: true})
             dispatch(addUser(response.data));
             navigate("/")
         }
-        catch{
-            console.log("Error: ")
+        catch(error){
+            setError(error?.response?.data || "Something went wrong")
+            console.log(error?.response?.data,"//")
         }
     }
     return <div className="card card-dash bg-base-300 w-96 mx-auto my-6">
@@ -63,6 +64,7 @@ const Login = () => {
                         value={password} onChange={(e)=>setPassword(e.target.value)}
                     />
                 </label>
+                <p className="text-red-500">{error}</p>
                 <button className="btn btn-primary flex justify-center items-center mx-auto my-2" onClick={handleLogin}>Login</button>
             </div>
         </div>
