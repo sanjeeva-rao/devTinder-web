@@ -20,7 +20,6 @@ const Login = () => {
         }
         catch(error){
             setError(error?.response?.data || "Something went wrong")
-            console.log(error?.response?.data,"//")
         }
     }
     return <div className="card card-dash bg-base-300 w-96 mx-auto my-6">
