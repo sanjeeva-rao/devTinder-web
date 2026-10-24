@@ -74,7 +74,11 @@ const Profile = () => {
                     <input type="text" className="input" value={skills} onChange={(e)=>setSkills(e.target.value)}/>
                 </fieldset>
                 <p className="text-red-500">{error}</p>
-                <button className="btn btn-primary flex justify-center items-center mx-auto my-2" onClick={saveUserDetials}>Save</button>
+                <div className="w-full flex justify-center">
+                    <button className="btn btn-primary my-2" onClick={saveUserDetials}>
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
         {

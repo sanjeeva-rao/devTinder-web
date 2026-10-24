@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
-    const [email,setEmail] = useState("Msd123456@gmail.com");
-    const [password, setPassword] = useState("Msd123456@");
+    const [email,setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("")
     const [error,setError] = useState("");
+    const [isLogin, setIsLogin] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,9 +25,21 @@ const Login = () => {
             setError(error?.response?.data || "Something went wrong")
         }
     }
-    return <div className="card card-dash bg-base-300 w-96 mx-auto my-6">
+
+    const handleSignup = async() => {
+        try{
+            const response = await axios.post(baseUrl+"/signUp",{firstName,lastName,email,password},{withCredentials:true});
+            dispatch(addUser(response.data));
+            navigate("/profile")
+        }
+        catch(error){
+            setError(error?.response?.data || "Something went wrong")
+        }
+    }
+
+    return <div className="card card-dash bg-base-300 w-96 mx-auto my-4">
         <div className="card-body">
-            <h2 className="card-title mb-2">Login</h2>
+            <h2 className="card-title mb-2">{isLogin ? "Login" : "Sign Up"}</h2>
             <div className="card-actions">
                 <label className="input validator my-2">
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -63,8 +78,31 @@ const Login = () => {
                         value={password} onChange={(e)=>setPassword(e.target.value)}
                     />
                 </label>
+                {
+                    !isLogin && <div>
+                        <label className="input validator my-2">
+                            <input
+                                type="text"
+                                placeholder="First Name"
+                                value = {firstName} onChange={(e)=>{setFirstName(e.target.value)}}
+                            />
+                        </label>
+                        <label className="input validator">
+                            <input
+                                type="text"
+                                placeholder="Last Name"
+                                value = {lastName} onChange={(e)=>{setLastName(e.target.value)}}
+                            />
+                        </label>
+                    </div>
+                }
                 <p className="text-red-500">{error}</p>
-                <button className="btn btn-primary flex justify-center items-center mx-auto my-2" onClick={handleLogin}>Login</button>
+                <div className="w-full flex justify-center">
+                    <button className="btn btn-primary my-2" onClick={isLogin ? handleLogin : handleSignup}>
+                        {isLogin ? "Login" : "Sign Up"}
+                    </button>
+                </div>
+                <p className="cursor-pointer text-center" onClick={()=>setIsLogin(!isLogin)}>{isLogin ? "Don't have an account ? Click here to Sign Up" : "Already account exists? Click here to Login"}</p>
             </div>
         </div>
     </div>
