@@ -6,14 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeedUsers } from "../utils/feedSlice.js";
 
 const Feed = () => {
-    const [feedUsers, setFeedUsers] = useState([]);
     const dispatch = useDispatch();
-    const feedDataFromRedux = useSelector(store => store.feed);
+    const feedUsers = useSelector(store => store.feed);
 
     const fetchFeedUsers = async()=>{
         try{
             const feedData = await axios.get(baseUrl+"/feed",{withCredentials: true});
-            setFeedUsers(feedData.data);
             dispatch(addFeedUsers(feedData.data));
         }
         catch(error){
@@ -22,18 +20,12 @@ const Feed = () => {
     }
 
     useEffect(()=>{
-        if(feedDataFromRedux){
-            setFeedUsers(feedDataFromRedux);
-        }
-        else{
-            fetchFeedUsers();
-        }
+        fetchFeedUsers()
     },[])
 
-    return <div className="flex flex-wrap">
-        {
-            feedUsers.map(user => <UserCard user={user} key={user._id}/>)
-        }
-    </div>
+    if(!feedUsers) return <div></div>
+
+    return !feedUsers.length ? <div>No New Users</div>
+    : <UserCard user={feedUsers[0]}/>
 }
 export default Feed;
