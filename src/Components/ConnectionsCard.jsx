@@ -1,7 +1,7 @@
 import axios from "axios";
 import { baseUrl, defaultPhotoUrl } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequests } from "../utils/RequestSlice";
+import { addRequests } from "../utils/requestSlice";
 
 const ConnectionsCard = ({user, showButtons}) => {
     const requests = useSelector(store => store.requests);

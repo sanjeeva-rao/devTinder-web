@@ -5,7 +5,7 @@ import { baseUrl, defaultPhotoUrl } from "../utils/constants";
 import { removeUser } from "../utils/userSlice";
 import { removeFeedUsers } from "../utils/feedSlice";
 import { romoveConnections } from "../utils/connectionsSlice";
-import { removeRequests } from "../utils/RequestSlice";
+import { removeRequests } from "../utils/requestSlice";
 const NavBar = () => {
     const loginUser = useSelector(store => store.user);
     const dispatch = useDispatch();

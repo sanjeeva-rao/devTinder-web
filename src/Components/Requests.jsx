@@ -3,7 +3,7 @@ import { baseUrl } from "../utils/constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ConnectionsCard from "./ConnectionsCard";
-import { addRequests } from "../utils/RequestSlice";
+import { addRequests } from "../utils/requestSlice";
 
 const Requests = () => {
     const requests = useSelector(store => store.requests);
